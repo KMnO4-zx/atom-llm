@@ -275,7 +275,7 @@ trainer.train()
 
 ### Step 4: 加载 lora 权重推理
 
-&emsp;&emsp;&emsp;&emsp;训练好了之后可以使用如下方式加载`lora`权重进行推理：
+&emsp;&emsp;训练好了之后可以使用如下方式加载`lora`权重进行推理：
 
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
