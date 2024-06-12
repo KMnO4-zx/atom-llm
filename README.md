@@ -294,27 +294,20 @@ model = AutoModelForCausalLM.from_pretrained(mode_path, device_map="auto",torch_
 # 加载lora权重
 model = PeftModel.from_pretrained(model, model_id=lora_path, config=config)
 
-prompt = "你是谁？"
-messages = [
-    {"role": "system", "content": "现在你要扮演皇帝身边的女人--甄嬛"},
-    {"role": "user", "content": prompt}
-]
+prompt = "介绍一下自己吧"
+inputs = tokenizer.apply_chat_template([{"role": "system", "content": "你是一名AI小助手，你的名字是不要葱姜蒜。"},{"role": "user", "content": prompt}],
+                                       add_generation_prompt=True,
+                                       tokenize=True,
+                                       return_tensors="pt",
+                                       return_dict=True
+                                       ).to('cuda')
 
-text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
-model_inputs = tokenizer([text], return_tensors="pt").to('cuda')
-
-generated_ids = model.generate(
-    model_inputs.input_ids,
-    max_new_tokens=512
-)
-generated_ids = [
-    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
-]
-
-response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
-
-print(response)
+gen_kwargs = {"max_length": 2500, "do_sample": True, "top_k": 1}
+with torch.no_grad():
+    outputs = model.generate(**inputs, **gen_kwargs)
+    outputs = outputs[:, inputs['input_ids'].shape[1]:]
+    print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
 
 ![alt text](./images/lora.png)
