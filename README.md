@@ -35,7 +35,7 @@ pip install peft==0.11.1
 pip install datasets==2.18.0
 ```
 
-> &emsp;&emsp;***对于配置环境有困难，或者喜欢Docker部署环境的同学，我在这里也准备了一个Docker镜像，大家可以直接使用Docker部署环境，或者在云服务器平台上直接创建环境: https://www.codewithgpu.com/i/KMnO4-zx/atom-llm/atom-llm***
+> ***对于配置环境有困难，或者喜欢Docker部署环境的同学，我在这里也准备了一个Docker镜像，大家可以直接使用Docker部署环境，或者在云服务器平台上直接创建环境: https://www.codewithgpu.com/i/KMnO4-zx/atom-llm/atom-llm***
 
 ### Step 2: 下载模型
 
